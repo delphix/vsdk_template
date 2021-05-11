@@ -1,0 +1,130 @@
+{
+    "repositoryDefinition": {
+        "type": "object",
+        "required": [
+            "prettyName"
+        ],
+        "properties": {
+            "prettyName": {
+                "type": "string",
+                "prettyName": "Identity Name",
+                "description": "Pretty name of this repository"
+              },
+              "uid": {
+                "type": "integer",
+                "prettyName": "Repository User ID",
+                "description": "Repository User Identifier"
+              },
+              "gid": {
+                "type": "integer",
+                "prettyName": "Repository Group ID",
+                "description": "Repository Group ID"
+              }
+        },
+        "nameField": "prettyName",
+        "identityFields": ["prettyName", "version"]
+    },
+    "sourceConfigDefinition": {
+        "type": "object",
+        "required": ["database_name"],
+        "additionalProperties": false,
+        "properties": {
+            "database_name": {
+		"type": "string",
+		"prettyName": "Name",
+                "description": "The name of the database",
+                "default": ""
+		}
+        },
+        "nameField": "database_name",
+        "identityFields": ["database_name"]
+    },
+    "virtualSourceDefinition": {
+        "type": "object",
+        "required": ["database_name", "mount_path", "instance_user", "instance_password"],
+        "additionalProperties" : false,
+        "properties" : {
+            "database_name": { 
+                "type": "string",
+                "prettyName": "VDB Name",
+                "description": "The name of the virtual database to be created",
+                "default": ""
+            },
+            "mount_path": {
+                "type": "string",
+                "format": "unixpath",
+                "prettyName": "Mount Path",
+                "description": "The full path of the VDB mountpoint",
+                "default": ""
+            },
+            "instance_user": {
+                "type": "string",
+                "prettyName": "Admin User",
+                "description": "The admin username for the instance used by the VDB",
+                "default": ""
+            },
+            "instance_password": {
+                "type": "string",
+                "format": "password",
+                "prettyName": "Admin Password",
+                "description": "The admin password for the instance",
+                "default": ""
+            }
+        },
+        "ordering" : ["database_name", "mount_path", "instance_user", "instance_password"]
+    },
+    "linkedSourceDefinition": {
+        "type": "object",
+        "required": ["backup_location", "backup_pattern", "mount_path", "instance_user", "instance_password"],
+        "additionalProperties" : false,
+        "properties" : {
+            "backup_location": { 
+                "type": "string",
+                "format": "unixpath",
+                "prettyName": "Backup file location",
+                "description": "The full path to the backup files used to update this dsource",
+                "default": ""
+            },
+            "backup_pattern": { 
+                "type": "string",
+                "prettyName": "Backup filename pattern",
+                "description": "A regular expression used to identify the backup files",
+                "default": "*.bak"
+            },
+            "mount_path": {
+                "type": "string",
+                "format": "unixpath",
+                "prettyName": "Staging Database Mount Path",
+                "description": "The full path to where the staging database filesystem should be mounted",
+                "default": ""
+            },
+            "instance_user": {
+                "type": "string",
+                "prettyName": "Admin User",
+                "description": "The admin username for the instance used by the staging database",
+                "default": ""
+            },
+            "instance_password": {
+                "type": "string",
+                "format": "password",
+                "prettyName": "Admin Password",
+                "description": "The admin user's password",
+                "default": ""
+            }
+        },
+	    "ordering" : [
+            "instance_user", "instance_password", "backup_location", "backup_pattern", "mount_path"
+        ]
+    },
+    "snapshotDefinition": {
+        "type" : "object",
+        "additionalProperties" : false,
+        "ordering": [
+            "backup_time"
+        ],
+        "properties" : {
+            "db_files": { "type": "string" }, 
+            "backup_time": { "type": "string" }
+        }
+    }
+}
