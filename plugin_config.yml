@@ -1,0 +1,10 @@
+id: 44ba7555-ab5d-49fb-983c-174d0d186cec
+name: mssqllinux
+language: PYTHON27
+hostTypes:
+- UNIX
+pluginType: STAGED
+entryPoint: plugin_runner:plugin
+srcDir: src
+schemaFile: schema.json
+buildNumber: 0.1.0
